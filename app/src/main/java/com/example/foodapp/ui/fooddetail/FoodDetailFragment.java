@@ -1,0 +1,68 @@
+package com.example.foodapp.ui.fooddetail;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.foodapp.R;
+import com.example.foodapp.ui.foodlist.FoodListViewModel;
+
+
+import Models.FoodModel;
+import Common.Common;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+public class FoodDetailFragment extends Fragment {
+
+    private FoodDetailViewModel foodDetailViewModel;
+    Unbinder unbinder;
+    @BindView(R.id.image_food_detail)
+    ImageView image_food;
+    @BindView(R.id.btn_cart)
+    CounterFab btn_cart;
+    @BindView(R.id.food_name)
+    TextView food_name;
+    @BindView(R.id.food_description)
+    TextView food_description;
+    @BindView(R.id.food_price)
+    TextView food_price;
+    @BindView(R.id.number_button)
+    ElegantNumberButton number_button;
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        foodDetailViewModel = ViewModelProviders.of(this).get(FoodDetailViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_food_detail, container, false);
+        unbinder = ButterKnife.bind(this,root);
+        foodDetailViewModel.getFoodModelMutableLiveData().observe(getViewLifecycleOwner(), new Observer<FoodModel>() {
+            @Override
+            public void onChanged(FoodModel foodModel) {
+                displayInfo(foodModel);
+            }
+        });
+        return root;
+    }
+
+    private void displayInfo(FoodModel foodModel) {
+        Glide.with(getContext()).load(foodModel.getImage()).into(image_food);
+        food_name.setText(new StringBuilder(foodModel.getName()));
+        food_description.setText(new StringBuilder(foodModel.getDescription()));
+        food_price.setText(new StringBuilder(foodModel.getPrice().toString()));
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Common.selectedFood.getName());
+    }
+}
