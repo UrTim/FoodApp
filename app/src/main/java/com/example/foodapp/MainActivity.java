@@ -32,7 +32,8 @@ import java.util.List;
 import Common.Common;
 import Models.UserModel;
 import dmax.dialog.SpotsDialog;
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    Toast.makeText(MainActivity.this, "You already registered!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "You already registered!", Toast.LENGTH_SHORT).show();
                     UserModel userModel = dataSnapshot.getValue(UserModel.class);
                     goToHomeActivity(userModel);
                 }else{
@@ -120,30 +121,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRegisterDialog(FirebaseUser user){
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        builder.setTitle("Register");
-        builder.setMessage("Please fill fields");
+        builder.setTitle("Регистрация");
+        builder.setMessage("Пожалуйста, заполните поля");
 
         View itemView = LayoutInflater.from(this).inflate(R.layout.layout_register,null);
         EditText edt_name = (EditText)itemView.findViewById(R.id.edt_name);
-        EditText edt_address = (EditText)itemView.findViewById(R.id.edt_address);
+
         EditText edt_phone = (EditText)itemView.findViewById(R.id.edt_phone);
 
         edt_phone.setText(user.getPhoneNumber());
 
         builder.setView(itemView);
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        builder.setPositiveButton("Register", (dialog, which) -> {
+        builder.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss());
+        builder.setPositiveButton("Регистрация", (dialog, which) -> {
             if(TextUtils.isEmpty(edt_name.getText().toString())){
-                Toast.makeText(MainActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
-                return;
-            }else if (TextUtils.isEmpty(edt_address.getText().toString())){
-                Toast.makeText(MainActivity.this, "Please enter your address", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Пожалуйста, введите имя", Toast.LENGTH_SHORT).show();
                 return;
             }
             UserModel userModel = new UserModel();
             userModel.setUid(user.getUid());
             userModel.setName(edt_name.getText().toString());
-            userModel.setAddress(edt_address.getText().toString());
             userModel.setPhone(edt_phone.getText().toString());
 
             userRef.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -151,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         dialog.dismiss();
-                        Toast.makeText(MainActivity.this, "Registration complete!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Регистрация завершена!", Toast.LENGTH_SHORT).show();
                         goToHomeActivity(userModel);
                     }
                 }
@@ -179,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             }else{
-                Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Ошибка входа", Toast.LENGTH_SHORT).show();
             }
         }
     }

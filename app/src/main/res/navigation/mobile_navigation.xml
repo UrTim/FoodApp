@@ -30,4 +30,10 @@
         android:name="com.example.foodapp.ui.fooddetail.FoodDetailFragment"
         android:label="@string/menu_food_detail"
         tools:layout="@layout/fragment_food_detail" />
+
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.example.foodapp.ui.cart.CartFragment"
+        android:label="@string/menu_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>
