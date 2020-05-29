@@ -100,9 +100,13 @@ public class CartFragment extends Fragment {
         }).setPositiveButton("Оформить", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String message = "Вы сделали заказ! Он будет доставлен в течении часа по адресу: "+edt_address_order.getText().toString();
-                sendNotification(message);
-                Toast.makeText(getContext(), "Заказ сделан!", Toast.LENGTH_SHORT).show();
+                if(edt_address_order.getText().length() == 0) {
+                    Toast.makeText(getContext(), "Пожалуйста, введите адрес!", Toast.LENGTH_SHORT).show();
+                }else{
+                    String message = "Вы сделали заказ! Он будет доставлен в течении часа по адресу: " + edt_address_order.getText().toString();
+                    sendNotification(message);
+                    Toast.makeText(getContext(), "Заказ сделан!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -222,7 +226,7 @@ public class CartFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        menu.findItem(R.id.action_settings).setVisible(false); // Hide home menu
+        //menu.findItem(R.id.action_settings).setVisible(false); // Hide home menu
         super.onPrepareOptionsMenu(menu);
     }
 

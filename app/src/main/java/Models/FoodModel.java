@@ -2,7 +2,7 @@ package Models;
 
 import java.util.List;
 
-public class FoodModel {
+public class FoodModel{
     private String name,image,id,description;
     private Long price;
     private List<AddonModel> addon;
@@ -86,4 +86,5 @@ public class FoodModel {
     public void setUserSelectedSize(SizeModel userSelectedSize) {
         this.userSelectedSize = userSelectedSize;
     }
+
 }

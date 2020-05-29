@@ -123,7 +123,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
                                                 @Override
                                                 public void onSuccess(Integer integer) {
-                                                    Toast.makeText(context, "Cart was updated", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "Корзина обновлена!", Toast.LENGTH_SHORT).show();
                                                     EventBus.getDefault().postSticky(new CounterCartEvent(true));
                                                 }
 
@@ -138,7 +138,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(()->{
-                                                Toast.makeText(context, "Add to Cart", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Добавлено в корзину", Toast.LENGTH_SHORT).show();
                                                 //Update Counter
                                                 EventBus.getDefault().postSticky(new CounterCartEvent(true));
                                             }, throwable -> {
@@ -155,7 +155,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(()->{
-                                                Toast.makeText(context, "Add to Cart", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Добавлено в корзину", Toast.LENGTH_SHORT).show();
                                                 //Update Counter
                                                 EventBus.getDefault().postSticky(new CounterCartEvent(true));
                                             }, throwable -> {

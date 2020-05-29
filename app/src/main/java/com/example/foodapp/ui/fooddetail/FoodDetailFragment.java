@@ -30,6 +30,9 @@ import com.example.foodapp.ui.foodlist.FoodListViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.gson.Gson;
 
 
@@ -86,6 +89,8 @@ public class FoodDetailFragment extends Fragment implements TextWatcher {
     ImageView img_add_addon;
     @BindView(R.id.chip_group_user_selected)
     ChipGroup chip_group_user_selected;
+
+
 
     @OnClick(R.id.img_add_addon)
     void onAddonClick(){
@@ -290,6 +295,7 @@ public class FoodDetailFragment extends Fragment implements TextWatcher {
         food_name.setText(new StringBuilder(foodModel.getName()));
         food_description.setText(new StringBuilder(foodModel.getDescription()));
         food_price.setText(new StringBuilder(foodModel.getPrice().toString()));
+
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Common.selectedFood.getName());
 
